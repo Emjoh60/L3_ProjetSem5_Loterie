@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.lang.IllegalArgumentException;
+import java.util.NoSuchElementException;
 
 public class Serveur {
     private int n;
@@ -87,19 +89,21 @@ public class Serveur {
         return ret;
     }
 
-    public void addJoueur(Joueur j) throws Exception {
+    public void addJoueur(Joueur j) throws DuplicateElementException {
         if (this.containJoueur(j))
-            throw new Exception("Valeur déjà présente");
+            throw new DuplicateElementException("Valeur déjà présente");
         else {
             this.listeJoueur.add(j);
+            this.notifieur.addAutreEventListener(j);
         }
     }
 
-    public void removeJoueur(Joueur rj) throws Exception {
+    public void removeJoueur(Joueur rj) throws NoSuchElementException {
         if (!this.containJoueur(rj))
-            throw new Exception("Valeur introuvable");
+            throw new NoSuchElementException("Valeur introuvable");
         else {
             this.listeJoueur.remove(rj);
+            this.notifieur.removeAutreEventListener(rj);
         }
     }
 
@@ -114,17 +118,17 @@ public class Serveur {
         return ret;
     }
 
-    public void addBillet(Billet b) throws Exception {
+    public void addBillet(Billet b) throws DuplicateElementException {
         if (this.containBillet(b))
-            throw new Exception("Valeur déjà présente");
+            throw new DuplicateElementException("Valeur déjà présente");
         else {
             this.listeBillet.add(b);
         }
     }
 
-    public void removeBilet(Billet rb) throws Exception {
+    public void removeBilet(Billet rb) throws NoSuchElementException {
         if (!this.containBillet(rb))
-            throw new Exception("Valeur introuvable");
+            throw new NoSuchElementException("Valeur introuvable");
         else {
             this.listeBillet.remove(rb);
         }
