@@ -1,11 +1,14 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Billet{
+public abstract class Billet implements Serializable{
+    private String idJoueur;
     private String id;
     private int prix;
     private ArrayList <Integer> liste;
 
-    public Billet(String id,int prix,ArrayList <Integer> liste) throws NullPointerException{
+    public Billet(String idJoueur,String id,int prix,ArrayList <Integer> liste) throws NullPointerException{
+        this.idJoueur=idJoueur;
         this.id=id;
         this.prix=prix;
         this.liste=new ArrayList<Integer>();
@@ -16,12 +19,18 @@ public abstract class Billet{
             this.liste.addAll(liste);
         }
     }
-
+    public void setIdJoueur(String id){
+        this.idJoueur=id;
+    }
     public void setId(String id){
         this.id=id;
     }
-    public void setId(int prix){
+    public void setPrix(int prix){
         this.prix=prix;
+    }
+
+    public String getIdJoueur() {
+        return this.idJoueur;
     }
 
     public String getId() {

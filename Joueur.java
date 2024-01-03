@@ -1,14 +1,16 @@
-public abstract class Joueur{
+public abstract class Joueur implements AutreEventListener{
     private String id;
     private String nom;
     private String prenom;
     private int argent;
+    private boolean playable;
 
     public Joueur(String id,String nom,String prenom,int argent){
         this.id=id;
         this.nom=nom;
         this.prenom=prenom;
         this.argent=argent;
+        this.playable=false;
     }
 
     public void setId(String id){
@@ -27,6 +29,10 @@ public abstract class Joueur{
         this.argent=argent;
     }
 
+    public void setPlayable(boolean b){
+        this.playable=b;
+    }
+
     public String getId() {
         return this.id;
     }
@@ -41,6 +47,15 @@ public abstract class Joueur{
 
     public int getArgent() {
         return this.argent;
+    }
+
+    public boolean getPlayable() {
+        return this.playable;
+    }
+
+    public void actionADeclancher(AutreEvent event) {
+        if (event.getSource() instanceof Serveur && event.getDonnee() instanceof boolean)
+            this.playable = (boolean)event.getDonnee();
     }
 
 }

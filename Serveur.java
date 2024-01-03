@@ -2,12 +2,15 @@ public class Serveur{
     private int n;
     private int k;
     private int t;
+    private boolean actif;
     private int duree;
+    private AutreEventNotifieur notifieur = new AutreEventNotifieur();
 
     public Serveur(int n,int k,int t,int duree){
         this.n=n;
         this.k=k;
         this.t=t;
+        this.actif=false;
         this.duree=duree;
     }
 
@@ -38,5 +41,9 @@ public class Serveur{
 
     public int getDuree() {
         return this.duree;
+    }
+
+    public int getState() {
+        return this.actif;
     }
 }
