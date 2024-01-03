@@ -81,7 +81,7 @@ public class Serveur {
     public boolean containJoueur(Joueur j) {
         boolean ret = false;
         for (Joueur a : this.listeJoueur) {
-            if (a.compareTo(j)) {
+            if (a.equals(j)) {
                 ret = false;
                 break;
             }
@@ -110,7 +110,7 @@ public class Serveur {
     public boolean containBillet(Billet b) {
         boolean ret = false;
         for (Billet a : this.listeBillet) {
-            if (a.compareTo(b)) {
+            if (a.equals(b)) {
                 ret = false;
                 break;
             }
