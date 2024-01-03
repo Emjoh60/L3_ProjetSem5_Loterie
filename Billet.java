@@ -60,7 +60,8 @@ public abstract class Billet implements Serializable {
         }
     }
 
-    public boolean compareTo(Billet b) {
-        return (this.getId() == b.getId());
+    @Override
+    public boolean equals(Billet b) {
+        return (this.getId().equals(b.getId()));
     }
 }

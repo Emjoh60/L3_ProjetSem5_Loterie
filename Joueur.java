@@ -53,13 +53,16 @@ public class Joueur implements AutreEventListener {
         return this.playable;
     }
 
-    public boolean compareTo(Joueur j) {
-        return (this.getId() == j.getId());
+    @Override
+    public boolean equals(Joueur j) {
+        return (this.getId().equals(j.getId()));
     }
 
     public void actionADeclancher(AutreEvent event) {
         if (event.getSource() instanceof Serveur)
             this.playable = (boolean) event.getDonnee();
     }
-
+    public static void main(String[] args) {
+        Joueur j1=new Joueur("A", null, null, 0)        
+    }
 }
