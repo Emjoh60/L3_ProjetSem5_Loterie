@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Joueur implements AutreEventListener {
     private String id;
     private String nom;
@@ -54,15 +56,18 @@ public class Joueur implements AutreEventListener {
     }
 
     @Override
-    public boolean equals(Joueur j) {
-        return (this.getId().equals(j.getId()));
+    public boolean equals(Object o) {
+        if(o instanceof Joueur){
+            Joueur j=(Joueur)o;
+            return (this.getId().equals(j.getId()));
+        }
+        else{
+            return false;
+        }
     }
 
     public void actionADeclancher(AutreEvent event) {
         if (event.getSource() instanceof Serveur)
             this.playable = (boolean) event.getDonnee();
-    }
-    public static void main(String[] args) {
-        Joueur j1=new Joueur("A", null, null, 0)        
     }
 }

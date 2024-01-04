@@ -61,7 +61,13 @@ public abstract class Billet implements Serializable {
     }
 
     @Override
-    public boolean equals(Billet b) {
-        return (this.getId().equals(b.getId()));
+    public boolean equals(Object o) {
+        if(o instanceof Billet){
+            Billet b=(Billet)o;
+            return (this.getId().equals(b.getId()));
+        }
+        else{
+            return false;
+        }
     }
 }

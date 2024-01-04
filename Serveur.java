@@ -1,16 +1,15 @@
 import java.util.ArrayList;
-import java.lang.IllegalArgumentException;
 import java.util.NoSuchElementException;
 
-public class Serveur {
+public class Serveur{
     private int n;
     private int k;
     private int t;
-    private boolean actif;
     private int duree;
+    private boolean actif;
     private Notifieur notifieur;
-    private ArrayList<Joueur> listeJoueur;
-    private ArrayList<Billet> listeBillet;
+    private ListeSansDoublon <Joueur> listeJoueur;
+    private ListeSansDoublon <Billet> listeBillet;
 
     public Serveur(int n, int k, int t, int duree) {
         this.n = n;
@@ -19,8 +18,8 @@ public class Serveur {
         this.actif = false;
         this.duree = duree;
         this.notifieur = new Notifieur();
-        this.listeJoueur = new ArrayList<>();
-        this.listeBillet = new ArrayList<>();
+        this.listeJoueur = new ListeSansDoublon<Joueur>();
+        this.listeBillet = new ListeSansDoublon<Billet>();
     }
 
     public Serveur(int n, int k, int t, int duree, ArrayList<Joueur> listeJoueur) throws NullPointerException {
@@ -30,15 +29,21 @@ public class Serveur {
         this.actif = false;
         this.duree = duree;
         this.notifieur = new Notifieur();
-        this.listeJoueur = new ArrayList<>();
-        this.listeBillet = new ArrayList<>();
+        this.listeBillet = new ListeSansDoublon<Billet>();
         if (listeJoueur == null) {
-            throw new NullPointerException("liste de joueur est vide");
-        } else {
-            this.listeJoueur.addAll(listeJoueur);
-            for (Joueur j : this.listeJoueur) {
-                this.notifieur.addAutreEventListener(j);
+            this.listeJoueur = new ListeSansDoublon<Joueur>();
+            throw new NullPointerException("La liste de joueur est vide");
+        } 
+        else {
+            try{
+                this.listeJoueur = new ListeSansDoublon<Joueur>(listeJoueur);
+                for (Joueur j : listeJoueur) {
+                    this.notifieur.addAutreEventListener(j);
+                }
             }
+            catch(IllegalArgumentException iae){
+                System.err.println(iae.getMessage());
+            }  
         }
     }
 
@@ -78,59 +83,57 @@ public class Serveur {
         return this.actif;
     }
 
-    public boolean containJoueur(Joueur j) {
-        boolean ret = false;
-        for (Joueur a : this.listeJoueur) {
-            if (a.equals(j)) {
-                ret = false;
-                break;
-            }
-        }
-        return ret;
+    public boolean isJoueurRegistered(Joueur j) {
+        return this.listeJoueur.contains(j);
     }
 
-    public void addJoueur(Joueur j) throws DuplicateElementException {
-        if (this.containJoueur(j))
-            throw new DuplicateElementException("Valeur déjà présente");
-        else {
+    public Joueur getJoueur(String id) {
+        return this.listeJoueur.get(new Joueur(id,"","",0));
+    }
+
+    public void addJoueur(Joueur j){
+        try{
             this.listeJoueur.add(j);
             this.notifieur.addAutreEventListener(j);
         }
+        catch(IllegalArgumentException iae){
+            System.err.println(iae.getMessage());
+        }  
     }
 
-    public void removeJoueur(Joueur rj) throws NoSuchElementException {
-        if (!this.containJoueur(rj))
-            throw new NoSuchElementException("Valeur introuvable");
-        else {
+    public void removeJoueur(Joueur rj){
+        try{
             this.listeJoueur.remove(rj);
             this.notifieur.removeAutreEventListener(rj);
+        }
+        catch(NoSuchElementException nsee){
+            System.err.println(nsee.getMessage());
         }
     }
 
     public boolean containBillet(Billet b) {
-        boolean ret = false;
-        for (Billet a : this.listeBillet) {
-            if (a.equals(b)) {
-                ret = false;
-                break;
-            }
-        }
-        return ret;
+        return this.listeBillet.contains(b);
     }
 
-    public void addBillet(Billet b) throws DuplicateElementException {
-        if (this.containBillet(b))
-            throw new DuplicateElementException("Valeur déjà présente");
-        else {
+    public Billet getBillet(String id) {
+        return this.listeBillet.get(new BilletI(id,"",0,new ArrayList<Integer>()));
+    }
+
+    public void addBillet(Billet b){
+        try{
             this.listeBillet.add(b);
         }
+        catch(IllegalArgumentException iae){
+            System.err.println(iae.getMessage());
+        }
     }
 
-    public void removeBilet(Billet rb) throws NoSuchElementException {
-        if (!this.containBillet(rb))
-            throw new NoSuchElementException("Valeur introuvable");
-        else {
+    public void removeBilet(Billet rb){
+        try{
             this.listeBillet.remove(rb);
+        }
+        catch(NoSuchElementException nsee){
+            System.err.println(nsee.getMessage());
         }
     }
 }
