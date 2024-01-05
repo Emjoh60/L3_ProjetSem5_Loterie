@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.lang.IllegalArgumentException;
 import java.util.NoSuchElementException;
 
-public class ListeSansDoublon <T> {
+public class ListeSansDoublon <T> implements Serializable{
     private ArrayList <T> liste;
 
     public ListeSansDoublon(){

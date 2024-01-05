@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Joueur implements AutreEventListener {
+public abstract class Joueur implements AutreEventListener {
     private String id;
     private String nom;
     private String prenom;
