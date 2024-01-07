@@ -219,7 +219,7 @@ public class Serveur{
         this.listeBillet.removeAll();   
     }
 
-    public boolean vendreBillet(int x,String idAcheteur){
+    public boolean vendreBillet(int x,String idAcheteur,ArrayList<Integer> liste){
         if(this.actif){
             String name;
             BilletI b1=null;
@@ -231,7 +231,12 @@ public class Serveur{
                 b1=new BilletI(idAcheteur,name,this.prixBilletUn,this.n,this.k); 
             }
             else if(x==0){
-                b2=new BilletII(idAcheteur,name,this.prixBilletDeux,this.n,this.k);
+                if(liste==null||liste.size()!=this.k){
+                    b2=new BilletII(idAcheteur,name,this.prixBilletDeux,this.n,this.k);
+                }
+                else{
+                    b2=new BilletII(idAcheteur,name,this.prixBilletDeux,liste);    
+                }
             }
             synchronized(this){
                 try{
@@ -359,10 +364,11 @@ public class Serveur{
         s.addJoueur(j6);
         s.addJoueur(j7);
         s.addJoueur(j8);
-        s.addJoueur(new JoueurNormal("9", "Jean", "Jules", 2, s));
+        s.addJoueur(new JoueurIntelligent("9", "Jean", "Malin", 200, s));
         s.addJoueur(new JoueurNormal("10", "Jean", "Jules", 2, s));
         s.addJoueur(new JoueurNormal("11", "Jean", "Jules", 2, s));
         s.addJoueur(new JoueurNormal("12", "Jean", "Jules", 2, s));
+        s.addJoueur(new JoueurNormal("13", "Jean", "Jules", 2, s));
 
         s.lancementLoterie();
         System.out.println("\n FIN LANCEMENT");

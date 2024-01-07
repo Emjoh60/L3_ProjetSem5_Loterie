@@ -12,15 +12,17 @@ public class JoueurNormal extends Joueur{
             System.out.println("\nLe joueur "+this.getId()+" commence une transaction");
             if(hasard==0 && this.getServeur().getprixBilletDeux()>this.getArgent()){
                 hasard=1;
-                this.getServeur().vendreBillet(hasard, this.getId());
+                this.getServeur().vendreBillet(hasard, this.getId(),null);
                 System.out.println("\nLe joueur "+this.getId()+" a effectué une transaction");
+                this.setArgent((int)(this.getArgent()-this.getServeur().getprixBilletUn()));
             }
             else if(hasard==1 && this.getServeur().getprixBilletUn()>this.getArgent()){
                 System.out.println("\nLe joueur "+this.getId()+" n'a pas assez d'argent");
             }
             else{
-                this.getServeur().vendreBillet(hasard, this.getId());
+                this.getServeur().vendreBillet(hasard, this.getId(),null);
                 System.out.println("\nLe joueur "+this.getId()+" a effectué une transaction");
+                this.setArgent((int)(this.getArgent()-this.getServeur().getprixBilletDeux()));
             }
         }
         else{
