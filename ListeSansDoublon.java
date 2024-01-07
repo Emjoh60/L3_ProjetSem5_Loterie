@@ -42,12 +42,24 @@ public class ListeSansDoublon <T> implements Serializable{
         return ret;
     }
 
+    protected ArrayList<T> getListe() {
+       return this.liste;
+    }
+
     public boolean contains(T element) {
         return this.liste.contains(element);
     }
 
     public T get(T element) {
        return(this.liste.get(this.liste.indexOf(element)));
+    }
+
+    public T getIndex(int x){
+        return (this.liste.get(x));
+    }
+
+    public int size(){
+        return this.liste.size();
     }
 
     public void add(T element) throws IllegalArgumentException {
@@ -58,11 +70,27 @@ public class ListeSansDoublon <T> implements Serializable{
         }
     }
 
+    public void addAll(ListeSansDoublon<T> l) {
+        this.liste.addAll(l.getListe());
+    }
+
     public void remove(T element) throws NoSuchElementException {
         if (!this.contains(element))
             throw new NoSuchElementException("Element n'est pas présent");
         else {
             this.liste.remove(element);
         }
+    }
+
+    public void removeAll(){
+        this.liste.removeAll(this.liste);
+    }
+
+    public void afficherListe() {
+        System.out.println("\nAffichage des éléments de la liste :");
+        for(int i=0;i<this.liste.size();i++){
+            System.out.println("- "+this.liste.get(i).toString());
+        }
+        System.out.println("\nFin de l'affichage des éléments de la liste :");
     }
 }

@@ -5,10 +5,25 @@ import java.util.NoSuchElementException;
 public abstract class Billet implements Serializable {
     private String idJoueur;
     private String id;
-    private int prix;
+    private double prix;
     private ArrayList<Integer> liste;
 
-    public Billet(String idJoueur, String id, int prix, ArrayList<Integer> liste) throws NullPointerException {
+    public Billet(String idJoueur, String id, double prix) {
+        this.idJoueur = idJoueur;
+        this.id = id;
+        this.prix = prix;
+        this.liste = new ArrayList<Integer>();
+    }
+
+    public Billet(String idJoueur, String id, double prix,int n, int k) {
+        this.idJoueur = idJoueur;
+        this.id = id;
+        this.prix = prix;
+        this.liste = new ArrayList<Integer>();
+        this.affecterNombre(n, k);
+    }
+
+    public Billet(String idJoueur, String id, double prix, ArrayList<Integer> liste) throws NullPointerException {
         this.idJoueur = idJoueur;
         this.id = id;
         this.prix = prix;
@@ -28,7 +43,7 @@ public abstract class Billet implements Serializable {
         this.id = id;
     }
 
-    public void setPrix(int prix) {
+    public void setPrix(double prix) {
         this.prix = prix;
     }
 
@@ -40,7 +55,7 @@ public abstract class Billet implements Serializable {
         return this.id;
     }
 
-    public int getPrix() {
+    public double getPrix() {
         return this.prix;
     }
 
@@ -60,6 +75,14 @@ public abstract class Billet implements Serializable {
         }
     }
 
+    public String getKNombres(){
+        String chaine="Billet "+this.getId();
+        for (Integer val : liste) {
+            chaine=chaine+" - "+val;
+        }
+        return chaine;
+    }
+
     @Override
     public boolean equals(Object o) {
         if(o instanceof Billet){
@@ -69,5 +92,12 @@ public abstract class Billet implements Serializable {
         else{
             return false;
         }
+    }
+
+    public abstract void affecterNombre(int n,int k);
+
+    @Override 
+    public String toString(){
+        return this.id;
     }
 }

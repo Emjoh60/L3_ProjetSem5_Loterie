@@ -1,18 +1,18 @@
-import java.util.ArrayList;
-
-public abstract class Joueur implements AutreEventListener {
+public abstract class Joueur implements AutreEventListener, Runnable {
     private String id;
     private String nom;
     private String prenom;
     private int argent;
     private boolean playable;
+    private Serveur serveur;
 
-    public Joueur(String id, String nom, String prenom, int argent) {
+    public Joueur(String id, String nom, String prenom, int argent,Serveur serveur){
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.argent = argent;
         this.playable = false;
+        this.serveur=serveur;
     }
 
     public void setId(String id) {
@@ -35,6 +35,10 @@ public abstract class Joueur implements AutreEventListener {
         this.playable = b;
     }
 
+    public void setServeur(Serveur s) {
+        this.serveur = s;
+    }
+
     public String getId() {
         return this.id;
     }
@@ -55,6 +59,10 @@ public abstract class Joueur implements AutreEventListener {
         return this.playable;
     }
 
+    public Serveur getServeur() {
+        return this.serveur;
+    }
+
     @Override
     public boolean equals(Object o) {
         if(o instanceof Joueur){
@@ -69,5 +77,10 @@ public abstract class Joueur implements AutreEventListener {
     public void actionADeclancher(AutreEvent event) {
         if (event.getSource() instanceof Serveur)
             this.playable = (boolean) event.getDonnee();
+    }
+
+    @Override 
+    public String toString(){
+        return this.id;
     }
 }
