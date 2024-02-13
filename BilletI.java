@@ -3,6 +3,7 @@ import java.util.Random;
 
 public class BilletI extends Billet{
 
+    /* Constructeurs */
     public BilletI(String idJoueur,String id,double prix,int n,int k){
         super(idJoueur,id,prix,n,k);
     }
@@ -11,6 +12,7 @@ public class BilletI extends Billet{
         super(idJoueur,id,prix,liste);
     }
 
+    // Affectation de nombre aléatoires
     public void affecterNombre(int n,int k){
         for(int i=0;i<k;i++){
             Random r=new Random();

@@ -11,6 +11,7 @@ public class Notifieur {
         listenerList.remove(AutreEventListener.class, listener);
     }
 
+    // Méthode appellée par le notifieur d'un objet permettant de prévenir tous les listener de cet objet que celui-ci diffuse un message
     public void diffuserAutreEvent(AutreEvent evt) {
         Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i + 2) {

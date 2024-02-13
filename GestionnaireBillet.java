@@ -5,11 +5,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class GestionnaireBillet{
-    private int limiteBilletMemoire;
-    private String saveName;
-    private ListeSansDoublon<String> listeIndex;
-    private SauvegardeBillet listeGeree;
 
+    /* Attributs */
+    private int limiteBilletMemoire; // Limite de billet en mémoire
+    private String saveName; // Nom du fichier dans lequel sérialiser les objets
+    private ListeSansDoublon<String> listeIndex; // Liste contenant tous les noms des fichiers
+    private SauvegardeBillet listeGeree; // Liste sans doublon sérialisable de manière safe
+
+    /* Constructeurs */
     public GestionnaireBillet(int lim,String saveName,ListeSansDoublon<Billet> liste){
         this.limiteBilletMemoire=lim;
         this.listeGeree=new SauvegardeBillet(liste);
@@ -17,6 +20,7 @@ public class GestionnaireBillet{
         this.saveName=saveName;
     }
 
+    /* Getter et setter */
     public int getLimiteBilletMemoire(){
         return this.limiteBilletMemoire;
     }
@@ -43,7 +47,7 @@ public class GestionnaireBillet{
 
     public void setListeGeree(ListeSansDoublon<Billet> liste) throws NullPointerException{
         if(liste!=null){
-            this.listeGeree.viderListeBillet();
+            this.listeGeree.viderListeBillet(); // En cas d'affectation de nouvelle liste, on vide la précédente de tout contenu
             this.listeGeree.enregistrerListeBillet(liste);
         }
         else{
@@ -63,6 +67,7 @@ public class GestionnaireBillet{
         this.listeGeree.desenregistrerBillet(b);
     }
 
+    /* Méthodes de sérialisation d'un billet unique */
     public void serializerBillet(Billet b){
         try{
             FileOutputStream fos = new FileOutputStream("Billet/"+b.getId());
@@ -75,6 +80,7 @@ public class GestionnaireBillet{
         }
     }
 
+    /* Méthodes de désérialisation d'un billet unique */
     public Billet deserializerBillet(String id){
         try{
             FileInputStream fis = new FileInputStream("Billet/"+id);
@@ -93,11 +99,15 @@ public class GestionnaireBillet{
         }
     }
 
+    /* Méthodes de sérialisation d'une liste de billet */
     public synchronized void sauvegarderListeBillet(){
         try{
+            // Si la liste contient un élément à sauvegarder
             if(this.listeGeree.getListe().size()>0){
+                // Affectation d'un nom
                 int x=this.listeIndex.size();
                 String name;
+                // Vérification de la disponibilité
                 if(this.listeIndex.contains(this.saveName)){
                     name=this.saveName+x;
                 }
@@ -117,6 +127,7 @@ public class GestionnaireBillet{
         }
     }
 
+    /* Méthodes de désérialisation d'une liste de billet */
     public ListeSansDoublon<Billet> chargerListeBillet(String id){
         try{
             FileInputStream fis = new FileInputStream("Sauvegarde/"+id);
@@ -136,6 +147,7 @@ public class GestionnaireBillet{
     }
 
 
+    /* Méthode de contrôle du nombre de billet */
     public boolean gestionLimiteBillet(){
         if(this.listeGeree.size()<this.limiteBilletMemoire){
             return false;

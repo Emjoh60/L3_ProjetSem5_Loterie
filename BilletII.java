@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class BilletII extends Billet{
     
+    /* Constructeurs */
     public BilletII(String idJoueur,String id,double prix,int n, int k){
         super(idJoueur,id,prix,n,k);
     }
@@ -11,6 +12,7 @@ public class BilletII extends Billet{
         super(idJoueur,id,prix,liste);
     }
 
+    // Affectation de nombre demandés à l'utilisateur
     public void affecterNombre(int n,int k){
         Scanner sc=new Scanner(System.in);
         int val;

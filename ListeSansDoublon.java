@@ -4,18 +4,23 @@ import java.lang.IllegalArgumentException;
 import java.util.NoSuchElementException;
 
 public class ListeSansDoublon <T> implements Serializable{
+    
+    /* Attribut */
     private ArrayList <T> liste;
 
+    /* Constructeur */
     public ListeSansDoublon(){
         this.liste=new ArrayList<T>();
     }
 
     public ListeSansDoublon(ArrayList <T> liste) throws NullPointerException,IllegalArgumentException{
         this.liste=new ArrayList<T>();
+        // Si la liste passée en paramètre est vide, on lève une exception
         if (liste == null) {
             throw new NullPointerException("La liste est vide");
         }
         else{
+            // Si la liste passée en paramètre contient des doublons, on lève une exception
             if(this.containDuplicate(liste)){
                 throw new IllegalArgumentException("La liste contient des doublons");
             }
@@ -25,11 +30,14 @@ public class ListeSansDoublon <T> implements Serializable{
         }
     }
 
+    // Fonction permettant de contrôler si un élément se trouve deux fois dans une liste
     public boolean containDuplicate(ArrayList <T> liste){
         boolean ret=false;
         int count;
+        // Pour chaque élément
         for(T element : liste){
             count=0;
+            // On parcourt la liste pour trouver un éventuel doublon
             for(T elementBis : liste){
                 if(element.equals(elementBis)){
                     count++;
@@ -62,6 +70,7 @@ public class ListeSansDoublon <T> implements Serializable{
         return this.liste.size();
     }
 
+    // L'ajout est conditionné par l'absence de l'élément dans la liste
     public void add(T element) throws IllegalArgumentException {
         if (this.contains(element))
             throw new IllegalArgumentException("Element déjà présent");
@@ -74,6 +83,7 @@ public class ListeSansDoublon <T> implements Serializable{
         this.liste.addAll(l.getListe());
     }
 
+    // Le retrait est conditionné par la présence de l'élément dans la liste
     public void remove(T element) throws NoSuchElementException {
         if (!this.contains(element))
             throw new NoSuchElementException("Element n'est pas présent");

@@ -1,11 +1,14 @@
 public abstract class Joueur implements AutreEventListener, Runnable {
-    private String id;
-    private String nom;
-    private String prenom;
-    private int argent;
-    private boolean playable;
-    private Serveur serveur;
 
+    /* Attributs */
+    private String id; // Id du joueur
+    private String nom; // Nom du joueur
+    private String prenom; // Prénom du joueur
+    private int argent; // Argent du joueur
+    private boolean playable; // Etat du joueur
+    private Serveur serveur; // Serveur associé au joueur
+
+    /* Constructeurs */
     public Joueur(String id, String nom, String prenom, int argent,Serveur serveur){
         this.id = id;
         this.nom = nom;
@@ -15,6 +18,7 @@ public abstract class Joueur implements AutreEventListener, Runnable {
         this.serveur=serveur;
     }
 
+    /* Getter et setter */
     public void setId(String id) {
         this.id = id;
     }
@@ -63,6 +67,8 @@ public abstract class Joueur implements AutreEventListener, Runnable {
         return this.serveur;
     }
 
+    /* Redéfinition des méthodes equals et toString pour les rendre comparables selon l'id */
+
     @Override
     public boolean equals(Object o) {
         if(o instanceof Joueur){
@@ -74,13 +80,16 @@ public abstract class Joueur implements AutreEventListener, Runnable {
         }
     }
 
+    @Override 
+    public String toString(){
+        return this.id;
+    }
+
+    // La classe joueur étant un listener, elle doit pouvoir déclencher une méthode en cas de réception d'un signal
     public void actionADeclancher(AutreEvent event) {
         if (event.getSource() instanceof Serveur)
             this.playable = (boolean) event.getDonnee();
     }
 
-    @Override 
-    public String toString(){
-        return this.id;
-    }
+
 }
